@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"/><title>Chat</title></head>
+<body>
+  <h2>Chat with Admin</h2>
+  <div id="messages"></div>
+  <input id="msg" placeholder="Type message" />
+  <button id="send">Send</button>
+
+  <script type="module">
+    import { auth, db } from './firebase-config.js';
+    import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js';
+    import { doc, setDoc, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js';
+
+    const adminUid = 'PASTE_ADMIN_UID_HERE'; // put your admin uid here (or detect by admin doc)
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) { window.location = 'index.html'; return; }
+      const chatDocRef = doc(db,'chats', user.uid);
+      // ensure chat doc exists with participants
+      await setDoc(chatDocRef, { participants: [user.uid, adminUid], createdAt: serverTimestamp() }, { merge: true });
+      const msgsCol = collection(chatDocRef, 'messages');
+      const q = query(msgsCol, orderBy('createdAt'));
+      onSnapshot(q, (snap) => {
+        const messages = document.getElementById('messages');
+        messages.innerHTML = '';
+        snap.forEach(d => {
+          const m = d.data();
+          const el = document.createElement('div');
+          el.textContent = `${m.senderUid === user.uid ? 'You' : 'Admin'}: ${m.text}`;
+          messages.appendChild(el);
+        });
+      });
+
+      document.getElementById('send').addEventListener('click', async () => {
+        const text = document.getElementById('msg').value.trim();
+        if (!text) return;
+        await addDoc(msgsCol, { senderUid: user.uid, text, createdAt: serverTimestamp() });
+        document.getElementById('msg').value = '';
+      });
+    });
+  </script>
+</body>
+</html>
