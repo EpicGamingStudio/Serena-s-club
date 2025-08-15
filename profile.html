@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Update Profile</title>
+  <style>
+    body { font-family: Arial, sans-serif; }
+    .container {
+      max-width: 300px;
+      margin: 50px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Update Profile</h2>
+    <input type="text" id="updateUsername" placeholder="New Username">
+    <input type="text" id="updateGender" placeholder="New Gender">
+    <input type="text" id="updateFavColor" placeholder="New Favorite Color">
+    <button onclick="updateDetails()">Update</button>
+    <button onclick="goBack()">Back to Homepage</button>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

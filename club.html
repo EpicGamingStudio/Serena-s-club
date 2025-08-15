@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Club</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; margin: 0; padding: 0; }
+    .center-btn {
+      margin-top: 30px;
+      padding: 12px 24px;
+      font-size: 18px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .center-btn:hover { background: #45a049; }
+
+    /* Full-screen overlay styles */
+    #chat-overlay {
+      display: none; /* Hidden by default */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      z-index: 1000;
+      box-sizing: border-box;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+    .chat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .chat-header h2 {
+      margin: 0;
+      font-size: 24px;
+    }
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    #messages {
+      flex-grow: 1;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+    .message { padding: 8px; margin: 5px 0; border-radius: 10px; }
+    .sent { background: #d4f8d4; text-align: right; }
+    .received { background: #f0f0f0; text-align: left; }
+    .message-input-container {
+      display: flex;
+      width: 100%;
+    }
+    #message-input {
+      flex-grow: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px 0 0 5px;
+      box-sizing: border-box;
+    }
+    #send-btn {
+      padding: 10px 15px;
+      background: #4CAF50;
+      color: white;
+      border: 1px solid #4CAF50;
+      border-radius: 0 5px 5px 0;
+      cursor: pointer;
+    }
+    #send-btn:hover { background: #45a049; }
+  </style>
+</head>
+<body>
+  <h1>Welcome to the Club!</h1>
+
+  <button class="center-btn" id="clubChatBtn">Club Chat</button>
+
+  <div id="chat-overlay">
+    <div class="chat-header">
+      <h2>Club Chat</h2>
+      <button class="close-btn" id="closeChatBtn">&times;</button>
+    </div>
+    <div id="messages"></div>
+    <div class="message-input-container">
+      <input type="text" id="message-input" placeholder="Type your message...">
+      <button id="send-btn">Send</button>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <script src="app.js"></script>
+
+  <script>
+    document.getElementById('clubChatBtn').addEventListener('click', () => {
+      document.getElementById('chat-overlay').style.display = 'flex';
+      // Added a slight delay to ensure the DOM is ready for the chat listener
+      setTimeout(() => {
+        if (typeof listenForMessages === 'function') {
+          listenForMessages();
+        }
+      }, 100);
+    });
+
+    document.getElementById('closeChatBtn').addEventListener('click', () => {
+      document.getElementById('chat-overlay').style.display = 'none';
+    });
+  </script>
+</body>
+</html>
