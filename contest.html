@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Number Guess Contest</title>
+  <link rel="stylesheet" href="contest.css">
+</head>
+<body>
+  <div class="page-wrapper">
+    <h1>🎯 Number Guess Contest 🎉</h1>
+
+    <div id="contestCard">
+      <div id="contestName">Contest Name</div>
+      <div id="contestDesc">Contest Description</div>
+      <p id="countdown">Loading…</p>
+      <p id="result"></p>
+
+      <button id="joinBtn">🚀 Join Contest</button>
+
+      <div id="guessSection">
+        <input id="guessInput" type="number" placeholder="Enter your guess" />
+        <button id="submitGuess">✅ Submit Guess</button>
+        <p id="submitStatus"></p>
+      </div>
+    </div>
+
+    <h3>📜 All Guesses</h3>
+    <button id="viewGuessesBtn">👀 View All Guesses</button>
+    <button id="deleteGuessesBtn">🗑 Delete All Guesses</button>
+    <div id="guessesList" style="display:none;"></div>
+
+    <h3>🏆 Top 5 Winners</h3>
+    <div id="ranking"></div>
+
+    <div class="back-buttons">
+      <button id="backAdminBtn">← Admin Back</button>
+      <button id="backUserBtn">← User Back</button>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="firebaseConfig.js"></script>
+  <script src="contest.js"></script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Update Profile</title>
+  <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Update Profile</h2>
+    <img id="profilePicPreview" class="profile-pic" src="https://via.placeholder.com/100" alt="Profile Picture">
+
+    <div id="uploadStatus">
+      <div class="spinner"></div>
+      <span>Please wait, profile pic is updating...</span>
+    </div>
+
+    <label for="profilePicInput" class="custom-file-upload">📷 Add Image</label>
+    <input type="file" id="profilePicInput" accept="image/*">
+
+    <input type="text" id="updateUsername" placeholder="New Username">
+    <textarea id="updateBio" placeholder="Your Bio"></textarea>
+
+    <button id="updateProfileBtn" onclick="updateDetails()">Update Profile</button>
+    <button onclick="goBack()">Back to Homepage</button>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyB4i9lTMyuiTK44VsGRd5Y9Vcf_UQEdq0s",
+      authDomain: "project-888ab.firebaseapp.com",
+      projectId: "project-888ab",
+      storageBucket: "project-888ab.firebasestorage.app",
+      messagingSenderId: "228515265618",
+      appId: "1:228515265618:web:a5da43da768f523a61338b"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    const profileInput = document.getElementById('profilePicInput');
+    const profilePreview = document.getElementById('profilePicPreview');
+    const uploadStatus = document.getElementById('uploadStatus');
+    const updateBtn = document.getElementById('updateProfileBtn');
+
+    updateBtn.disabled = true;
+
+    // Load user data
+    firebase.auth().onAuthStateChanged(async user => {
+      if(user){
+        updateBtn.disabled = false;
+        const uid = user.uid;
+        const userRef = firebase.firestore().collection("users").doc(uid);
+
+        try {
+          const doc = await userRef.get();
+          if(doc.exists){
+            const data = doc.data();
+            document.getElementById('updateUsername').value = data.username || "";
+            document.getElementById('updateBio').value = data.bio || "";
+            if(data.profilePicBase64){
+              profilePreview.src = data.profilePicBase64;
+            }
+          }
+        } catch(err){
+          console.error("Error loading user data:", err);
+        }
+      } else {
+        window.location.href = "index.html";
+      }
+    });
+
+    // Preview selected image with spinner
+    profileInput.addEventListener('change', function() {
+      const file = this.files[0];
+      if(file){
+        uploadStatus.style.display = 'flex';
+        const reader = new FileReader();
+        reader.onload = e => {
+          profilePreview.src = e.target.result;
+          profilePreview.dataset.base64 = e.target.result;
+          setTimeout(() => { uploadStatus.style.display = 'none'; }, 500);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Update profile function
+    async function updateDetails() {
+      const user = firebase.auth().currentUser;
+      if(!user){ return; }
+
+      const uid = user.uid;
+      const username = document.getElementById('updateUsername').value;
+      const bio = document.getElementById('updateBio').value;
+      const profilePicBase64 = profilePreview.dataset.base64 || null;
+      const userRef = firebase.firestore().collection("users").doc(uid);
+
+      try {
+        await userRef.set({
+          username: username,
+          bio: bio,
+          ...(profilePicBase64 && {profilePicBase64})
+        }, {merge: true});
+
+        window.location.href = "homepage.html";
+      } catch(error){
+        console.error("Failed to update profile:", error);
+      }
+    }
+
+    function goBack(){ window.location.href = "homepage.html"; }
+  </script>
+</body>
+</html>

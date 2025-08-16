@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Contest (Admin)</title>
+  <link rel="stylesheet" href="makecontest.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Create Number Guess Contest</h1>
+
+    <label>Contest Name</label>
+    <input id="contestName" type="text" placeholder="e.g., Daily Number Challenge" />
+
+    <label>Contest Description</label>
+    <textarea id="contestDesc" placeholder="Write a short description..." rows="3"></textarea>
+
+    <label>Secret Number</label>
+    <input id="secretNumber" type="number" placeholder="e.g., 42" />
+
+    <button id="create">Create Contest</button>
+    <p id="status"></p>
+
+    <button id="sendZems">Send Zems</button>
+
+   <p>
+  <a href="contest.html" class="contest-link">
+    <span class="badge">🏆</span> Open Contest Page
+  </a>
+</p>
+    <p><button id="logout">Logout</button></p>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <!-- Config & Logic -->
+  <script src="firebaseConfig.js"></script>
+  <script src="makecontest.js"></script>
+</body>
+</html>
