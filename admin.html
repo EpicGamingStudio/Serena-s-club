@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Admin Login</title>
+  <link rel="stylesheet" href="admin.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <div class="page-wrapper">
+    <h1>Admin Login</h1>
+
+    <label>Email</label>
+    <input id="email" type="email" placeholder="admin@email.com" />
+
+    <label>Password</label>
+    <div class="input-wrapper">
+      <input id="password" type="password" placeholder="••••••••" />
+      <i class="fa-solid fa-eye eye-icon" id="togglePassword"></i>
+    </div>
+
+    <div class="btn-row">
+      <button id="signup">Sign Up</button>
+      <button id="signin">Sign In</button>
+    </div>
+
+    <p id="msg"></p>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="firebaseConfig.js"></script>
+  <script src="admin.js"></script>
+
+  <script>
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+
+    togglePassword.addEventListener('click', () => {
+      const isPassword = passwordInput.type === 'password';
+      passwordInput.type = isPassword ? 'text' : 'password';
+      togglePassword.classList.toggle('fa-eye');
+      togglePassword.classList.toggle('fa-eye-slash');
+    });
+  </script>
+</body>
+</html>
