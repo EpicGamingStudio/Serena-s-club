@@ -1,3 +1,21 @@
+.firebase-msg {
+  font-size: 14px;
+  margin-top: 10px;
+  min-height: 20px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: all 0.3s;
+}
+
+.firebase-msg.error {
+  color: #b00020;
+  background-color: transparent;
+}
+
+.firebase-msg.success {
+  color: #2e7d32;
+  background-color: #e6f4ea;
+}
 /* 🌸 Reset */
 * {
   margin: 0;
@@ -6,14 +24,16 @@
   font-family: 'Segoe UI', Arial, sans-serif;
 }
 
+
 /* 🌸 Body */
 body {
   background: linear-gradient(135deg, #ffe4e1, #ffd6d6);
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* aligns card near top on big screens */
+  align-items: center;
+  flex-direction: column;
   min-height: 100vh;
-  padding: 40px 20px;
+  padding: 20px;
 }
 
 /* 🌸 Card container */
@@ -23,18 +43,17 @@ body {
   margin: 15px;
   border-radius: 20px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-  width: 90%;
-  max-width: 600px; /* bigger for desktops */
+  width: 100%;
+  max-width: 420px;
   animation: fadeIn 0.6s ease both;
   text-align: center;
-  transition: all 0.3s ease;
 }
 
 /* 🌸 Headings */
 .form-card h2 {
   color: #d46a6a;
   margin-bottom: 20px;
-  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-size: clamp(1.5rem, 4vw, 2rem);
   font-weight: 600;
   text-shadow: 1px 1px 2px rgba(200, 100, 100, 0.15);
 }
@@ -43,12 +62,12 @@ body {
 .form-card input {
   display: block;
   width: 100%;
-  padding: clamp(12px, 2vw, 16px);
+  padding: 12px 15px;
   margin: 12px 0;
   border-radius: 12px;
   border: 2px solid #f5a1a1;
   outline: none;
-  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-size: 1rem;
   background-color: #fff0f5;
   transition: all 0.3s ease;
 }
@@ -89,7 +108,7 @@ body {
 .form-card button {
   display: block;
   width: 100%;
-  padding: clamp(12px, 2vw, 16px);
+  padding: 12px;
   margin: 18px 0 10px;
   border-radius: 25px;
   border: none;
@@ -97,7 +116,7 @@ body {
   color: white;
   font-weight: bold;
   cursor: pointer;
-  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-size: 1rem;
   transition: all 0.3s ease;
   box-shadow: 0 4px 10px rgba(240, 128, 128, 0.3);
 }
@@ -116,7 +135,7 @@ body {
 /* 🌸 Links */
 .form-card p {
   margin-top: 10px;
-  font-size: clamp(0.9rem, 1.8vw, 1rem);
+  font-size: 0.9rem;
   color: #555;
 }
 
@@ -130,26 +149,6 @@ body {
   text-decoration: underline;
 }
 
-/* 🌸 Firebase Messages */
-.firebase-msg {
-  font-size: 1rem;
-  margin-top: 10px;
-  min-height: 20px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  transition: all 0.3s;
-}
-
-.firebase-msg.error {
-  color: #b00020;
-  background-color: transparent;
-}
-
-.firebase-msg.success {
-  color: #2e7d32;
-  background-color: #e6f4ea;
-}
-
 /* 🌸 Animations */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
@@ -157,15 +156,6 @@ body {
 }
 
 /* 🌸 Responsive */
-@media (max-width: 768px) {
-  body {
-    padding: 30px 15px;
-  }
-  .form-card {
-    padding: 25px 20px;
-  }
-}
-
 @media (max-width: 480px) {
   .form-card {
     padding: 20px 15px;
@@ -173,8 +163,5 @@ body {
   }
   .form-card h2 {
     font-size: 1.4rem;
-  }
-  .form-card input, .form-card button {
-    font-size: 1rem;
   }
 }
